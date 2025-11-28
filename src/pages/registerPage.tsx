@@ -23,12 +23,17 @@ const fields = [
     placeholder: 'mail@gmail.com',
     type: 'email',
   },
-  {field: 'password', label: 'Password', placeholder: 'Foo24311', type: 'text'},
+  {
+    field: 'password',
+    label: 'Password',
+    placeholder: 'Foo24311',
+    type: 'password',
+  },
   {
     field: 'confirmPassword',
     label: 'Confirm password',
     placeholder: 'Foo24311',
-    type: 'text',
+    type: 'password',
   },
 ];
 
