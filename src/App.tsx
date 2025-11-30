@@ -8,17 +8,20 @@ import {
 } from './routes';
 import {QueryClientProvider} from '@tanstack/react-query';
 import {queryClient} from './constants/queryClient';
+import LoggerPage from './components/loggerPage';
 
 const privateRoute = privateRoutes.map(({route, component}) => ({
   path: route,
   Component: component,
   loader: protectedLoader,
+  HydrateFallback: LoggerPage,
 }));
 
 const publicRoute = publicRoutes.map(({route, component}) => ({
   path: route,
   Component: component,
   loader: guestOnlyLoader,
+  HydrateFallback: LoggerPage,
 }));
 
 let router = createBrowserRouter([
@@ -32,7 +35,7 @@ let router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }

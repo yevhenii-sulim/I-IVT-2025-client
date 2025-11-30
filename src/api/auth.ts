@@ -8,6 +8,6 @@ export const auth = async <T extends Record<string, any>>({
   param: 'login' | 'signup';
   body: T;
 }) => {
-  const {data} = await axios.post(`${BASE_URL}user/${param}`, body);
+  const {data} = await axios.post(`${BASE_URL}${param}`, body);
   return data;
 };

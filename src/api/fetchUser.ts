@@ -8,6 +8,6 @@ export const fetchUser = async (token: string) => {
     });
     return data;
   } catch (error) {
-    return error;
+    throw error;
   }
 };

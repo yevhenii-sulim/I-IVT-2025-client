@@ -1,5 +1,6 @@
-import {NavLink, Outlet} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import {privateRoutes, publicRoutes} from '../routes';
+import NawLinkComponent from '../components/nawLink';
 
 export default function Root() {
   function guestOnlyLoader() {
@@ -10,38 +11,20 @@ export default function Root() {
   const isExistToken = guestOnlyLoader();
 
   return (
-    <div>
-      <nav className='flex justify-center gap-20 my-4'>
+    <div className=' flex flex-col min-h-screen min-w-full py-15'>
+      <nav className='flex shrink-0 justify-center gap-20 mb-4'>
         {isExistToken &&
           privateRoutes.map((route) => (
-            <NavLink
-              key={route.route}
-              to={route.route}
-              className={({isActive}) =>
-                isActive
-                  ? 'text-blue-500 border-b-2 border-blue-500'
-                  : 'text-blue-300 hover:text-blue-500'
-              }
-            >
-              <span className='capitalize'>{route.name}</span>
-            </NavLink>
+            <NawLinkComponent key={route.name} route={route} />
           ))}
         {!isExistToken &&
           publicRoutes.map((route) => (
-            <NavLink
-              key={route.route}
-              to={route.route}
-              className={({isActive}) =>
-                isActive
-                  ? 'text-blue-500 border-b-2 border-blue-500'
-                  : 'text-blue-300 hover:text-blue-500'
-              }
-            >
-              <span className='capitalize'>{route.name}</span>
-            </NavLink>
+            <NawLinkComponent key={route.name} route={route} />
           ))}
       </nav>
-      <Outlet />
+      <main className='flex-1 flex'>
+        <Outlet />
+      </main>
     </div>
   );
 }
