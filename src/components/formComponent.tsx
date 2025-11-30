@@ -33,11 +33,6 @@ export default function FormComponent<T extends Record<string, any>>({
   }, {} as T);
 
   const onSubmit = async (values: T) => {
-    delete values.confirmPassword;
-    await Promise.resolve(() => {
-      setInterval(() => {}, 2000);
-    });
-
     try {
       await mutation.mutateAsync(values);
     } catch (error: any) {

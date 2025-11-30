@@ -52,9 +52,12 @@ const validationSchema = yup.object({
     .required('Password is required'),
   confirmPassword: yup
     .string()
-    .nullable()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm password is required'),
+    .required('Confirm password is required')
+    .when('password', {
+      is: (val: string) => !!val,
+      then: (schema) =>
+        schema.oneOf([yup.ref('password')], 'Passwords must match'),
+    }),
 });
 
 export default function RegisterPage(): React.ReactNode {
