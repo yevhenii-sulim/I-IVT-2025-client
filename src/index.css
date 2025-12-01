@@ -4,6 +4,7 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(0, 0, 0);
   background-color: #242424;
+  background-image: linear-gradient(to left bottom, #0101f7, #f5f504);
 }
