@@ -66,6 +66,7 @@ export function InputField<T extends Record<string, any>>({
           type={type}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
+          value={values[field] ?? ''}
           className={clsx(baseClass, hasError ? errorClass : successClass)}
         />
       </div>

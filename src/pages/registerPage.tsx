@@ -14,6 +14,14 @@ interface Values {
   confirmPassword?: string;
 }
 
+const initialValues = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const fields = [
   {field: 'firstname', label: 'First name', type: 'text'},
   {field: 'lastname', label: 'Last name', type: 'text'},
@@ -66,19 +74,21 @@ export default function RegisterPage(): React.ReactNode {
     onSuccess: (data) => {
       localStorage.setItem('token', data.token);
       queryClient.invalidateQueries({queryKey: ['user']});
-      window.location.reload();
+      window.location.href = '/';
     },
   });
   const errorRef = useRef<any | null>(null);
 
   return (
     <Container>
-      <FormComponent<Values>
+      <FormComponent
         validationSchema={validationSchema}
         mutation={registerMutation}
         title='Registration'
         fields={fields}
         errorRef={errorRef}
+        initialValues={initialValues}
+        styleForm='flex flex-col gap-8 mx-auto justify-stretch items-center '
       />
     </Container>
   );

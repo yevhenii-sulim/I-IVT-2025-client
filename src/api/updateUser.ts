@@ -8,9 +8,22 @@ export interface ValuesUserType {
   email?: string;
 }
 
-export const fetchUser = async (token: string, body: ValuesUserType) => {
+export const updateUser = async ({
+  token,
+  body,
+}: {
+  token: string;
+  body: ValuesUserType;
+}) => {
+  const keysBody = Object.keys(body) as (keyof ValuesUserType)[];
+
+  for (const key of keysBody) {
+    if (body[key] === '') {
+      delete body[key];
+    }
+  }
   try {
-    const {data} = await axios.post(`${BASE_URL}update`, body, {
+    const {data} = await axios.patch(`${BASE_URL}update`, body, {
       headers: {Authorization: `Bearer ${token}`},
     });
     return data;

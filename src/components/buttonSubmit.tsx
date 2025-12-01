@@ -18,7 +18,7 @@ export default function ButtonSubmit({
         <button
           type='submit'
           disabled={isSubmitting}
-          className={`py-2 px-2 text-[#ffffff] border-[${color}] border rounded-lg bg-[#0101f7]`}
+          className={`py-2 px-4 text-[#ffffff] border-[${color}] border rounded-lg bg-[#0101f7]`}
         >
           submit
         </button>

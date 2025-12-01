@@ -11,6 +11,11 @@ interface Values {
   email: string;
 }
 
+const initialValues = {
+  email: '',
+  password: '',
+};
+
 const fields = [
   {
     field: 'email',
@@ -39,17 +44,19 @@ export default function LoginPage(): React.ReactNode {
     onSuccess: (data) => {
       localStorage.setItem('token', data.token);
       queryClient.invalidateQueries({queryKey: ['user']});
-      window.location.reload();
+      window.location.href = '/';
     },
   });
   return (
     <Container>
-      <FormComponent<Values>
+      <FormComponent
         validationSchema={validationSchema}
         mutation={loginMutation}
         title='Login'
         fields={fields}
         errorRef={errorRef}
+        initialValues={initialValues}
+        styleForm='flex flex-col gap-8 mx-auto justify-stretch items-center '
       />
     </Container>
   );

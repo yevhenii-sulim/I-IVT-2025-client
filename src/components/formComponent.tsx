@@ -12,27 +12,34 @@ interface FieldsType {
   label: string;
 }
 
+interface Values {
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
 interface Props {
   validationSchema: AnyObjectSchema;
   title: string;
   fields: FieldsType[];
   errorRef: React.RefObject<string[] | null>;
   mutation: any;
+  initialValues: Values;
+  styleForm: string;
 }
 
-export default function FormComponent<T extends Record<string, any>>({
+export default function FormComponent({
   validationSchema,
   title,
   fields,
   errorRef,
   mutation,
+  initialValues,
+  styleForm,
 }: Props): React.ReactNode {
-  const initialValues = fields.reduce((acc, item) => {
-    acc[item.field as keyof T] = '' as T[keyof T];
-    return acc;
-  }, {} as T);
-
-  const onSubmit = async (values: T) => {
+  const onSubmit = async (values: Values) => {
     try {
       await mutation.mutateAsync(values);
     } catch (error: any) {
@@ -47,12 +54,13 @@ export default function FormComponent<T extends Record<string, any>>({
     <>
       <Title title={title} />
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {({errors, touched, isSubmitting}) => (
-          <Form className='flex flex-col gap-8 mx-auto justify-stretch items-center '>
+          <Form className={styleForm}>
             {fields.map(({field, type, label}) => {
               return (
                 <InputField

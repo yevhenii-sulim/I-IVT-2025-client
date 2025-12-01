@@ -1,5 +1,3 @@
-import {fetchUser} from './api/fetchUser';
-import {queryClient} from './constants/queryClient';
 import GalleryPage from './pages/galleryPage';
 import HomePage from './pages/homePage';
 import LoginPage from './pages/loginPage';
@@ -17,23 +15,14 @@ export interface AppRoute {
 
 export function guestOnlyLoader() {
   const token = localStorage.getItem('token');
-  if (token) return redirect('/gallery');
+  if (token) return redirect('/');
   return null;
 }
 
 export async function protectedLoader() {
   const token = localStorage.getItem('token');
   if (!token) return redirect('/login');
-
-  try {
-    return await queryClient.fetchQuery({
-      queryKey: ['user'],
-      queryFn: () => fetchUser(token),
-    });
-  } catch {
-    localStorage.removeItem('token');
-    return redirect('/login');
-  }
+  return null;
 }
 
 export const privateRoutes: AppRoute[] = [
