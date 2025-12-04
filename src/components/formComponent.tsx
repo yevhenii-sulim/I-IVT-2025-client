@@ -1,47 +1,39 @@
 import {Form, Formik} from 'formik';
 import React from 'react';
 import type {AnyObjectSchema} from 'yup';
-import {InputField} from './inputField';
-import ErrorResponse from './errorResponse';
-import Title from './title';
-import Button from './button';
 
-interface FieldsType {
-  field: string;
-  type: string;
-  label: string;
-}
+import type {FormikErrors, FormikTouched, FormikValues} from 'formik';
+import Title from '~/components/title';
+import Button from '~/components/button';
+import ErrorResponse from '~/components/errorResponse';
 
-interface Values {
-  firstname?: string;
-  lastname?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
-
-interface Props {
+interface Props<T extends FormikValues> {
   validationSchema: AnyObjectSchema;
   title: string;
-  fields: FieldsType[];
   errorRef: React.RefObject<string[] | null>;
-  mutation: any;
-  initialValues: Values;
+  mutation: {
+    mutateAsync: (data: T) => Promise<any>;
+  };
+  initialValues: T;
   styleForm: string;
   children?: React.ReactNode;
+  returnFields: (
+    errors: FormikErrors<T>,
+    touched: FormikTouched<T>
+  ) => React.ReactNode;
 }
 
-export default function FormComponent({
+export default function FormComponent<T extends FormikValues>({
   validationSchema,
   title,
-  fields,
   errorRef,
   mutation,
   initialValues,
   styleForm,
   children,
-}: Props): React.ReactNode {
-  const onSubmit = async (values: Values) => {
+  returnFields,
+}: Props<T>): React.JSX.Element {
+  const onSubmit = async (values: T) => {
     try {
       await mutation.mutateAsync(values);
     } catch (error: any) {
@@ -55,7 +47,7 @@ export default function FormComponent({
   return (
     <>
       <Title title={title} />
-      <Formik
+      <Formik<T>
         enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -63,20 +55,14 @@ export default function FormComponent({
       >
         {({errors, touched, isSubmitting}) => (
           <Form className={styleForm}>
-            {fields.map(({field, type, label}) => {
-              return (
-                <InputField
-                  key={field}
-                  label={label}
-                  field={field}
-                  type={type}
-                  errors={errors}
-                  touched={touched}
-                />
-              );
-            })}
+            {returnFields(errors, touched)}
             <div className='flex gap-5'>
-              <Button isSubmitting={isSubmitting} color='#191930' type='submit'>
+              <Button
+                isSubmitting={isSubmitting}
+                color='#191930'
+                type='submit'
+                className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+              >
                 Submit
               </Button>
               {children}

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {BASE_URL} from '../routes';
 
 export const auth = async <T extends Record<string, any>>({
   param,
@@ -9,7 +8,7 @@ export const auth = async <T extends Record<string, any>>({
   body: T;
 }) => {
   const {firstname, lastname, email, password} = body;
-  const {data} = await axios.post(`${BASE_URL}${param}`, {
+  const {data} = await axios.post(`${param}`, {
     firstname,
     lastname,
     email,

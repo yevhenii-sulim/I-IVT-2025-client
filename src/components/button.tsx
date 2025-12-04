@@ -18,12 +18,7 @@ export default function Button({
       {isSubmitting ? (
         <PropagateLoader color={color} />
       ) : (
-        <button
-          {...props}
-          disabled={isSubmitting}
-          className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
-          style={{borderColor: color}}
-        >
+        <button {...props} disabled={isSubmitting}>
           {children}
         </button>
       )}

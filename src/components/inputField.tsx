@@ -5,27 +5,26 @@ import {
   type FormikTouched,
 } from 'formik';
 import clsx from 'clsx';
-import {useState} from 'react';
+import {InputHTMLAttributes, useState} from 'react';
 
-type InputFieldProps<T extends Record<string, any>> = {
-  label: string;
-  field: string;
-  type: string;
-  errors: FormikErrors<T>;
-  touched: FormikTouched<T>;
-
-  wrapperClass?: string;
-  labelClass?: string;
-  baseClass?: string;
-  successClass?: string;
-  errorClass?: string;
-  errorTextClass?: string;
-};
+type InputFieldProps<T extends Record<string, any>> =
+  InputHTMLAttributes<HTMLInputElement> & {
+    label: string;
+    field: string;
+    errors: FormikErrors<T>;
+    touched: FormikTouched<T>;
+    as?: string;
+    wrapperClass?: string;
+    labelClass?: string;
+    baseClass?: string;
+    successClass?: string;
+    errorClass?: string;
+    errorTextClass?: string;
+  };
 
 export function InputField<T extends Record<string, any>>({
   label,
   field,
-  type,
   errors,
   touched,
 
@@ -35,6 +34,7 @@ export function InputField<T extends Record<string, any>>({
   successClass = 'border-[#191930]',
   errorClass = 'border-red-500',
   errorTextClass = 'text-normal text-red-900 mt-1',
+  ...props
 }: InputFieldProps<T>) {
   const {values} = useFormikContext<any>();
   const [isFocus, setIsFocus] = useState(false);
@@ -61,9 +61,9 @@ export function InputField<T extends Record<string, any>>({
         </label>
 
         <Field
+          {...props}
           id={String(field)}
           name={String(field)}
-          type={type}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           value={values[field] ?? ''}

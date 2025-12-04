@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {BASE_URL} from '../routes';
 
 export interface ValuesUserType {
   firstname?: string;
@@ -23,7 +22,7 @@ export const updateUser = async ({
     }
   }
   try {
-    const {data} = await axios.patch(`${BASE_URL}update`, body, {
+    const {data} = await axios.patch(`update`, body, {
       headers: {Authorization: `Bearer ${token}`},
     });
     return data;

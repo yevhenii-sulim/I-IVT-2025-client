@@ -1,6 +1,6 @@
 import {NavLink} from 'react-router-dom';
-import type {AppRoute} from '../routes';
 import clsx from 'clsx';
+import {AppRoute} from '~/routes';
 
 const activeLinkStyle =
   'text-[#191930] border-b-2 border-[#193027] text-bold text-xl';

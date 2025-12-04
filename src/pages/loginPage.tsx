@@ -1,10 +1,11 @@
+import {useMutation} from '@tanstack/react-query';
 import React, {useRef} from 'react';
 import * as yup from 'yup';
-import FormComponent from '../components/formComponent';
-import {useMutation} from '@tanstack/react-query';
-import {auth} from '../api/auth';
-import {queryClient} from '../constants/queryClient';
-import Container from '../components/container';
+import {auth} from '~/api/auth';
+import Container from '~/components/container';
+import FormComponent from '~/components/formComponent';
+import {InputField} from '~/components/inputField';
+import {queryClient} from '~/constants/queryClient';
 
 interface Values {
   password: string;
@@ -37,7 +38,7 @@ const validationSchema = yup.object({
   password: yup.string().required('Password is required'),
 });
 
-export default function LoginPage(): React.ReactNode {
+export default function LoginPage(): React.JSX.Element {
   const errorRef = useRef<any | null>(null);
   const loginMutation = useMutation({
     mutationFn: (values: Values) => auth({param: 'login', body: values}),
@@ -53,10 +54,23 @@ export default function LoginPage(): React.ReactNode {
         validationSchema={validationSchema}
         mutation={loginMutation}
         title='Login'
-        fields={fields}
         errorRef={errorRef}
         initialValues={initialValues}
         styleForm='flex flex-col gap-8 mx-auto justify-stretch items-center '
+        returnFields={(errors, touched) =>
+          fields.map(({field, type, label}) => {
+            return (
+              <InputField
+                key={field}
+                label={label}
+                field={field}
+                type={type}
+                errors={errors}
+                touched={touched}
+              />
+            );
+          })
+        }
       />
     </Container>
   );

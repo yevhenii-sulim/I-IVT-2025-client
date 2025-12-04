@@ -1,9 +1,9 @@
-import GalleryPage from './pages/galleryPage';
-import HomePage from './pages/homePage';
-import LoginPage from './pages/loginPage';
-import ProfilePage from './pages/profilePage';
-import RegisterPage from './pages/registerPage';
 import {redirect} from 'react-router-dom';
+import GalleryPage from '~/pages/galleryPage/galleryPage';
+import HomePage from '~/pages/homePage';
+import LoginPage from '~/pages/loginPage';
+import ProfilePage from '~/pages/profilePage';
+import RegisterPage from '~/pages/registerPage';
 
 export const BASE_URL = 'http://localhost:3000/api/';
 

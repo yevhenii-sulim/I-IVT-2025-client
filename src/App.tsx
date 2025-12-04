@@ -1,14 +1,18 @@
 import {createBrowserRouter, RouterProvider} from 'react-router';
-import Root from './pages/rootPage';
+import {QueryClientProvider} from '@tanstack/react-query';
+import {queryClient} from './constants/queryClient';
+import axios from 'axios';
 import {
+  BASE_URL,
   guestOnlyLoader,
   privateRoutes,
   protectedLoader,
   publicRoutes,
-} from './routes';
-import {QueryClientProvider} from '@tanstack/react-query';
-import {queryClient} from './constants/queryClient';
-import LoggerPage from './components/loggerPage';
+} from '~/routes';
+import LoggerPage from '~/components/loggerPage';
+import Root from '~/pages/rootPage';
+
+axios.defaults.baseURL = BASE_URL;
 
 const privateRoute = privateRoutes.map(({route, component}) => ({
   path: route,

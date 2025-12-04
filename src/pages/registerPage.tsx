@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
 import * as yup from 'yup';
-import FormComponent from '../components/formComponent';
 import {useMutation} from '@tanstack/react-query';
-import {auth} from '../api/auth';
-import {queryClient} from '../constants/queryClient';
-import Container from '../components/container';
+import FormComponent from '~/components/formComponent';
+import {auth} from '~/api/auth';
+import {queryClient} from '~/constants/queryClient';
+import Container from '~/components/container';
+import {InputField} from '~/components/inputField';
 
 interface Values {
   firstname: string;
@@ -85,10 +86,23 @@ export default function RegisterPage(): React.ReactNode {
         validationSchema={validationSchema}
         mutation={registerMutation}
         title='Registration'
-        fields={fields}
         errorRef={errorRef}
         initialValues={initialValues}
         styleForm='flex flex-col gap-8 mx-auto justify-stretch items-center '
+        returnFields={(errors, touched) =>
+          fields.map(({field, type, label}) => {
+            return (
+              <InputField
+                key={field}
+                label={label}
+                field={field}
+                type={type}
+                errors={errors}
+                touched={touched}
+              />
+            );
+          })
+        }
       />
     </Container>
   );

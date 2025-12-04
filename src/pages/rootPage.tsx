@@ -1,6 +1,6 @@
 import {Outlet} from 'react-router-dom';
-import {privateRoutes, publicRoutes} from '../routes';
-import NawLinkComponent from '../components/nawLink';
+import {privateRoutes, publicRoutes} from '~/routes';
+import NawLinkComponent from '~/components/nawLink';
 
 export default function Root() {
   function guestOnlyLoader() {

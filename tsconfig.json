@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
-    "types": ["node"]
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["*"]
+    },
+    "types": ["node"],
+    "jsx": "react-jsx"
   },
-  "files": [],
-  "references": [
-    {"path": "./tsconfig.app.json"},
-    {"path": "./tsconfig.node.json"}
-  ]
+  "include": ["src"]
 }

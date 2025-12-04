@@ -1,12 +1,13 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
 import React, {useRef, useState} from 'react';
-import {fetchUser} from '../api/fetchUser';
-import FormComponent from '../components/formComponent';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import * as yup from 'yup';
-import {updateUser} from '../api/updateUser';
-import LoggerPage from '../components/loggerPage';
-import {queryClient} from '../constants/queryClient';
-import Button from '../components/button';
+import {fetchUser} from '~/api/fetchUser';
+import {queryClient} from '~/constants/queryClient';
+import {updateUser} from '~/api/updateUser';
+import LoggerPage from '~/components/loggerPage';
+import Button from '~/components/button';
+import FormComponent from '~/components/formComponent';
+import {InputField} from '~/components/inputField';
 
 interface Values {
   firstname?: string;
@@ -55,7 +56,7 @@ const Container = ({children}: {children: React.ReactNode}) => (
   </div>
 );
 
-export default function ProfilePage(): React.ReactNode {
+export default function ProfilePage(): React.JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
   const token = localStorage.getItem('token') || '';
 
@@ -109,10 +110,20 @@ export default function ProfilePage(): React.ReactNode {
           />
 
           <div className='flex gap-4'>
-            <Button color='#0101f7' onClick={logOut} type='button'>
+            <Button
+              color='#0101f7'
+              onClick={logOut}
+              type='button'
+              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+            >
               log out
             </Button>
-            <Button color='#0101f7' onClick={editProfile} type='button'>
+            <Button
+              color='#0101f7'
+              onClick={editProfile}
+              type='button'
+              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+            >
               edit
             </Button>
           </div>
@@ -122,10 +133,23 @@ export default function ProfilePage(): React.ReactNode {
           validationSchema={validationSchema}
           mutation={updateMutation}
           title='Edit'
-          fields={fields}
           initialValues={initialValues}
           errorRef={errorRef}
           styleForm='flex flex-col gap-8 justify-stretch items-start'
+          returnFields={(errors, touched) =>
+            fields.map(({field, type, label}) => {
+              return (
+                <InputField
+                  key={field}
+                  label={label}
+                  field={field}
+                  type={type}
+                  errors={errors}
+                  touched={touched}
+                />
+              );
+            })
+          }
         >
           <Button color='#0101f7' onClick={cancelEdit} type='button'>
             cancel
