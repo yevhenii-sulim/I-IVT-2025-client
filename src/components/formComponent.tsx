@@ -2,9 +2,9 @@ import {Form, Formik} from 'formik';
 import React from 'react';
 import type {AnyObjectSchema} from 'yup';
 import {InputField} from './inputField';
-import ButtonSubmit from './buttonSubmit';
 import ErrorResponse from './errorResponse';
 import Title from './title';
+import Button from './button';
 
 interface FieldsType {
   field: string;
@@ -28,6 +28,7 @@ interface Props {
   mutation: any;
   initialValues: Values;
   styleForm: string;
+  children?: React.ReactNode;
 }
 
 export default function FormComponent({
@@ -38,6 +39,7 @@ export default function FormComponent({
   mutation,
   initialValues,
   styleForm,
+  children,
 }: Props): React.ReactNode {
   const onSubmit = async (values: Values) => {
     try {
@@ -73,7 +75,12 @@ export default function FormComponent({
                 />
               );
             })}
-            <ButtonSubmit isSubmitting={isSubmitting} color='#191930' />
+            <div className='flex gap-5'>
+              <Button isSubmitting={isSubmitting} color='#191930' type='submit'>
+                Submit
+              </Button>
+              {children}
+            </div>
             {errorRef.current &&
               errorRef.current.map((item: string) => (
                 <ErrorResponse item={item} key={item} />

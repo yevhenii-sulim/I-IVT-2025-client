@@ -1,12 +1,12 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import React, {useRef, useState} from 'react';
 import {fetchUser} from '../api/fetchUser';
-import Button from '../components/button';
 import FormComponent from '../components/formComponent';
 import * as yup from 'yup';
 import {updateUser} from '../api/updateUser';
 import LoggerPage from '../components/loggerPage';
 import {queryClient} from '../constants/queryClient';
+import Button from '../components/button';
 
 interface Values {
   firstname?: string;
@@ -59,12 +59,6 @@ export default function ProfilePage(): React.ReactNode {
   const [isEditing, setIsEditing] = useState(false);
   const token = localStorage.getItem('token') || '';
 
-  const logOut = () => {
-    localStorage.removeItem('token');
-    queryClient.removeQueries({queryKey: ['user']});
-    window.location.href = '/login';
-  };
-
   const {data, isLoading} = useQuery({
     queryKey: ['user'],
     queryFn: () => fetchUser(token),
@@ -75,6 +69,16 @@ export default function ProfilePage(): React.ReactNode {
     lastname: data?.lastname ?? '',
     email: data?.email ?? '',
     password: '',
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    queryClient.removeQueries({queryKey: ['user']});
+    window.location.href = '/login';
+  };
+
+  const cancelEdit = () => {
+    setIsEditing(false);
   };
 
   const editProfile = () => {
@@ -105,10 +109,10 @@ export default function ProfilePage(): React.ReactNode {
           />
 
           <div className='flex gap-4'>
-            <Button color='#0101f7' borderColor='#191930' onClick={logOut}>
+            <Button color='#0101f7' onClick={logOut} type='button'>
               log out
             </Button>
-            <Button color='#0101f7' borderColor='#191930' onClick={editProfile}>
+            <Button color='#0101f7' onClick={editProfile} type='button'>
               edit
             </Button>
           </div>
@@ -122,7 +126,11 @@ export default function ProfilePage(): React.ReactNode {
           initialValues={initialValues}
           errorRef={errorRef}
           styleForm='flex flex-col gap-8 justify-stretch items-start'
-        />
+        >
+          <Button color='#0101f7' onClick={cancelEdit} type='button'>
+            cancel
+          </Button>
+        </FormComponent>
       )}
     </Container>
   );
