@@ -3,8 +3,8 @@ import React from 'react';
 import {queryClient} from '~/constants/queryClient';
 import * as yup from 'yup';
 import {getGallery, updateGallery} from '~/api/gallery';
-import GalleryForm from '~/pages/galleryPage/galleryForm';
-import LoggerPage from '~/components/loggerPage';
+import LoaderPage from '~/components/loaderPage';
+import GalleryForm from '~/pages/galleryListPage/galleryForm';
 
 interface Values {
   title: string;
@@ -39,7 +39,7 @@ export default function UpdateGalleryForm({id}: Props): React.JSX.Element {
     },
   });
   return isLoading ? (
-    <LoggerPage />
+    <LoaderPage />
   ) : (
     <GalleryForm
       validationSchema={validationSchema}

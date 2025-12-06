@@ -9,7 +9,7 @@ import {
   protectedLoader,
   publicRoutes,
 } from '~/routes';
-import LoggerPage from '~/components/loggerPage';
+import LoaderPage from '~/components/loaderPage';
 import Root from '~/pages/rootPage';
 
 axios.defaults.baseURL = BASE_URL;
@@ -18,14 +18,14 @@ const privateRoute = privateRoutes.map(({route, component}) => ({
   path: route,
   Component: component,
   loader: protectedLoader,
-  HydrateFallback: LoggerPage,
+  HydrateFallback: LoaderPage,
 }));
 
 const publicRoute = publicRoutes.map(({route, component}) => ({
   path: route,
   Component: component,
   loader: guestOnlyLoader,
-  HydrateFallback: LoggerPage,
+  HydrateFallback: LoaderPage,
 }));
 
 let router = createBrowserRouter([

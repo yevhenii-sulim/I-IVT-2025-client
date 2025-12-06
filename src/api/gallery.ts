@@ -7,8 +7,16 @@ export async function getGallery({token, id}: {id: number; token: string}) {
   return data;
 }
 
-export async function getAllGalleries({token}: {token: string}) {
-  const {data} = await axios.get('gallery', {
+export async function getAllGalleries({
+  token,
+  page,
+  limit = 5,
+}: {
+  token: string;
+  page: number;
+  limit?: number;
+}) {
+  const {data} = await axios.get(`gallery?page=${page}&limit=${limit}`, {
     headers: {Authorization: `Bearer ${token}`},
   });
   return data;

@@ -3,7 +3,7 @@ import React from 'react';
 import {createGallery} from '~/api/gallery';
 import * as yup from 'yup';
 import {queryClient} from '~/constants/queryClient';
-import GalleryForm from '~/pages/galleryPage/galleryForm';
+import GalleryForm from '~/pages/galleryListPage/galleryForm';
 
 interface Values {
   title: string;
@@ -20,13 +20,20 @@ const initialValues = {
   description: '',
 };
 
-export default function CreateGalleryForm(): React.JSX.Element {
+interface Props {
+  closeModal: (param: boolean) => void;
+}
+
+export default function CreateGalleryForm({
+  closeModal,
+}: Props): React.JSX.Element {
   const token = localStorage.getItem('token');
 
   const mutation = useMutation({
     mutationFn: (values: Values) => createGallery({token, body: values}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['gallery']});
+      closeModal(false);
     },
   });
   return (

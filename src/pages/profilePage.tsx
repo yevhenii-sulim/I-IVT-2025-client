@@ -4,10 +4,10 @@ import * as yup from 'yup';
 import {fetchUser} from '~/api/fetchUser';
 import {queryClient} from '~/constants/queryClient';
 import {updateUser} from '~/api/updateUser';
-import LoggerPage from '~/components/loggerPage';
 import Button from '~/components/button';
 import FormComponent from '~/components/formComponent';
 import {InputField} from '~/components/inputField';
+import LoaderPage from '~/components/loaderPage';
 
 interface Values {
   firstname?: string;
@@ -98,7 +98,7 @@ export default function ProfilePage(): React.JSX.Element {
   return (
     <Container>
       {isLoading ? (
-        <LoggerPage />
+        <LoaderPage />
       ) : !isEditing ? (
         <>
           <Field name='First name' dataName={data?.firstname} />

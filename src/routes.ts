@@ -1,5 +1,6 @@
 import {redirect} from 'react-router-dom';
-import GalleryPage from '~/pages/galleryPage/galleryPage';
+import GalleryListPage from '~/pages/galleryListPage';
+import GalleryPage from '~/pages/galleryPage';
 import HomePage from '~/pages/homePage';
 import LoginPage from '~/pages/loginPage';
 import ProfilePage from '~/pages/profilePage';
@@ -11,6 +12,7 @@ export interface AppRoute {
   name: string;
   route: string;
   component: React.ComponentType;
+  children?: AppRoute[];
 }
 
 export function guestOnlyLoader() {
@@ -27,7 +29,12 @@ export async function protectedLoader() {
 
 export const privateRoutes: AppRoute[] = [
   {name: 'home', route: '/', component: HomePage},
-  {name: 'gallery', route: '/gallery', component: GalleryPage},
+  {
+    name: 'gallery',
+    route: '/gallery',
+    component: GalleryListPage,
+  },
+  {name: 'images', route: '/gallery/images', component: GalleryPage},
   {name: 'profile', route: '/profile', component: ProfilePage},
 ];
 
