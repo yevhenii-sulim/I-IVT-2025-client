@@ -58,11 +58,10 @@ const Container = ({children}: {children: React.ReactNode}) => (
 
 export default function ProfilePage(): React.JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
-  const token = localStorage.getItem('token') || '';
 
   const {data, isLoading} = useQuery({
     queryKey: ['user'],
-    queryFn: () => fetchUser(token),
+    queryFn: () => fetchUser(),
   });
 
   const initialValues = {
@@ -87,7 +86,7 @@ export default function ProfilePage(): React.JSX.Element {
   };
 
   const updateMutation = useMutation({
-    mutationFn: (values: Values) => updateUser({token, body: values}),
+    mutationFn: (values: Values) => updateUser({body: values}),
     onSuccess: () => {
       setIsEditing(false);
       queryClient.invalidateQueries({queryKey: ['user']});
@@ -96,11 +95,11 @@ export default function ProfilePage(): React.JSX.Element {
   const errorRef = useRef<any | null>(null);
 
   return (
-    <Container>
+    <div className='mt-10 grid justify-items-center mx-auto'>
       {isLoading ? (
         <LoaderPage />
       ) : !isEditing ? (
-        <>
+        <div>
           <Field name='First name' dataName={data?.firstname} />
           <Field name='Last name' dataName={data?.lastname} />
           <Field name='Email' dataName={data?.email} />
@@ -114,7 +113,7 @@ export default function ProfilePage(): React.JSX.Element {
               color='#0101f7'
               onClick={logOut}
               type='button'
-              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-active`}
             >
               log out
             </Button>
@@ -122,12 +121,12 @@ export default function ProfilePage(): React.JSX.Element {
               color='#0101f7'
               onClick={editProfile}
               type='button'
-              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+              className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-active`}
             >
               edit
             </Button>
           </div>
-        </>
+        </div>
       ) : (
         <FormComponent
           validationSchema={validationSchema}
@@ -156,6 +155,6 @@ export default function ProfilePage(): React.JSX.Element {
           </Button>
         </FormComponent>
       )}
-    </Container>
+    </div>
   );
 }

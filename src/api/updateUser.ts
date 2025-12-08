@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {api} from '~/App';
 
 export interface ValuesUserType {
   firstname?: string;
@@ -7,13 +7,7 @@ export interface ValuesUserType {
   email?: string;
 }
 
-export const updateUser = async ({
-  token,
-  body,
-}: {
-  token: string;
-  body: ValuesUserType;
-}) => {
+export const updateUser = async ({body}: {body: ValuesUserType}) => {
   const keysBody = Object.keys(body) as (keyof ValuesUserType)[];
 
   for (const key of keysBody) {
@@ -22,9 +16,7 @@ export const updateUser = async ({
     }
   }
   try {
-    const {data} = await axios.patch(`update`, body, {
-      headers: {Authorization: `Bearer ${token}`},
-    });
+    const {data} = await api.patch(`update`, body);
     return data;
   } catch (error) {
     throw error;

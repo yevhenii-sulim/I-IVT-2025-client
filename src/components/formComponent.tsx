@@ -34,6 +34,7 @@ export default function FormComponent<T extends FormikValues>({
   returnFields,
 }: Props<T>): React.JSX.Element {
   const onSubmit = async (values: T) => {
+    console.log('first');
     try {
       await mutation.mutateAsync(values);
     } catch (error: any) {
@@ -61,7 +62,7 @@ export default function FormComponent<T extends FormikValues>({
                 isSubmitting={isSubmitting}
                 color='#191930'
                 type='submit'
-                className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-[#0101f7]`}
+                className={`py-2 px-4 text-[#ffffff] border rounded-lg bg-active`}
               >
                 Submit
               </Button>

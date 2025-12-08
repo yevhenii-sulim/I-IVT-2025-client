@@ -13,6 +13,7 @@ interface Values {
 
 interface Props {
   id: number;
+  closeModal: (param: boolean) => void;
 }
 
 const validationSchema = yup.object({
@@ -20,32 +21,37 @@ const validationSchema = yup.object({
   description: yup.string().required('Description is required').max(255),
 });
 
-export default function UpdateGalleryForm({id}: Props): React.JSX.Element {
+export default function UpdateGalleryForm({
+  id,
+  closeModal,
+}: Props): React.JSX.Element {
   const {data, isLoading} = useQuery({
     queryKey: ['user'],
-    queryFn: () => getGallery({token, id}),
+    queryFn: () => getGallery({id}),
   });
 
   const initialValues = {
     title: data?.title,
     description: data?.description,
   };
-  const token = localStorage.getItem('token');
 
   const mutation = useMutation({
-    mutationFn: (values: Values) => updateGallery({token, body: values, id}),
+    mutationFn: (values: Values) => updateGallery({body: values, id}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['gallery']});
+      closeModal(false);
     },
   });
   return isLoading ? (
     <LoaderPage />
   ) : (
-    <GalleryForm
-      validationSchema={validationSchema}
-      mutation={mutation}
-      initialValues={initialValues}
-      title='Create gallery'
-    />
+    <>
+      <GalleryForm
+        validationSchema={validationSchema}
+        mutation={mutation}
+        initialValues={initialValues}
+        title='Create gallery'
+      />
+    </>
   );
 }

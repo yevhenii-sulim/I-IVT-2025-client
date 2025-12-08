@@ -12,7 +12,7 @@ interface Values {
 
 const validationSchema = yup.object({
   title: yup.string().required('Title is required').min(2).max(50),
-  description: yup.string().required('Description is required').max(255),
+  description: yup.string().max(255),
 });
 
 const initialValues = {
@@ -27,10 +27,8 @@ interface Props {
 export default function CreateGalleryForm({
   closeModal,
 }: Props): React.JSX.Element {
-  const token = localStorage.getItem('token');
-
   const mutation = useMutation({
-    mutationFn: (values: Values) => createGallery({token, body: values}),
+    mutationFn: (values: Values) => createGallery({body: values}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['gallery']});
       closeModal(false);

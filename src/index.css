@@ -8,3 +8,7 @@
   background-color: #242424;
   background-image: linear-gradient(to left bottom, #0101f7, #f5f504);
 }
+
+@theme {
+  --color-active: #0101f7;
+}

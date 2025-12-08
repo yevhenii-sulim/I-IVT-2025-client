@@ -1,6 +1,7 @@
 import {Outlet} from 'react-router-dom';
 import {privateRoutes, publicRoutes} from '~/routes';
 import NawLinkComponent from '~/components/nawLink';
+import {useEffect} from 'react';
 
 export default function Root() {
   function guestOnlyLoader() {
@@ -12,14 +13,11 @@ export default function Root() {
 
   return (
     <div className=' flex flex-col min-h-screen min-w-full py-15'>
-      <nav className='flex shrink-0 justify-center gap-20 mb-4'>
+      <nav className='flex justify-center gap-20 mb-4'>
         {isExistToken &&
-          privateRoutes.map(
-            (route) =>
-              route.route !== '/gallery/images' && (
-                <NawLinkComponent key={route.name} route={route} />
-              )
-          )}
+          privateRoutes.map((route) => (
+            <NawLinkComponent key={route.name} route={route} />
+          ))}
         {!isExistToken &&
           publicRoutes.map((route) => (
             <NawLinkComponent key={route.name} route={route} />

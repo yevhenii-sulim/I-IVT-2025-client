@@ -1,7 +1,6 @@
 import {redirect} from 'react-router-dom';
 import GalleryListPage from '~/pages/galleryListPage';
 import GalleryPage from '~/pages/galleryPage';
-import HomePage from '~/pages/homePage';
 import LoginPage from '~/pages/loginPage';
 import ProfilePage from '~/pages/profilePage';
 import RegisterPage from '~/pages/registerPage';
@@ -28,13 +27,12 @@ export async function protectedLoader() {
 }
 
 export const privateRoutes: AppRoute[] = [
-  {name: 'home', route: '/', component: HomePage},
   {
     name: 'gallery',
-    route: '/gallery',
+    route: '/',
     component: GalleryListPage,
   },
-  {name: 'images', route: '/gallery/images', component: GalleryPage},
+  {name: 'images', route: '/images', component: GalleryPage},
   {name: 'profile', route: '/profile', component: ProfilePage},
 ];
 

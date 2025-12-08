@@ -12,7 +12,17 @@ import {
 import LoaderPage from '~/components/loaderPage';
 import Root from '~/pages/rootPage';
 
-axios.defaults.baseURL = BASE_URL;
+export const api = axios.create({
+  baseURL: BASE_URL,
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const privateRoute = privateRoutes.map(({route, component}) => ({
   path: route,

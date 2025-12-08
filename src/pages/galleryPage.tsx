@@ -6,18 +6,17 @@ import Image from '~/components/image';
 import LoaderPage from '~/components/loaderPage';
 
 export default function GalleryPage(): React.JSX.Element {
-  const token = localStorage.getItem('token');
   const {state} = useLocation();
   const {data, isLoading} = useQuery({
     queryKey: ['gallery'],
-    queryFn: () => getGallery({token, id: state.id}),
+    queryFn: () => getGallery({id: state.id}),
     placeholderData: (previousData) => previousData,
   });
 
   return isLoading ? (
     <LoaderPage />
   ) : (
-    <div className='w-full px-4'>
+    <div className='mt-10 px-4 lg:px-15 grid justify-items-center md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-fit mx-auto'>
       <header>
         <h1 className='text-center mb-3'>{state.title}</h1>
         <p>{state.description}</p>

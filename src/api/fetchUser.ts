@@ -1,10 +1,8 @@
-import axios from 'axios';
+import {api} from '~/App';
 
-export const fetchUser = async (token: string) => {
+export const fetchUser = async () => {
   try {
-    const {data} = await axios.get(`user`, {
-      headers: {Authorization: `Bearer ${token}`},
-    });
+    const {data} = await api.get(`user`);
     return data;
   } catch (error) {
     throw error;
